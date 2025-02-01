@@ -18,6 +18,7 @@ The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for
 * Support for launching from the website, and from saved _RBXL_ files.
 * File updates from Roblox's deployment servers are only applied where needed.
 * Runs and installs in a separate directory, 100% independent of Roblox Studio's bootstrapper.
+* Enables all the Internal-only features (This includes a better Fast Flag editor).
 
 # ANTI-VIRUS DISCLAIMER
 
