@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Microsoft.Win32;
-using System.Text;
 
 namespace RobloxStudioModManager
 {
@@ -18,7 +17,7 @@ namespace RobloxStudioModManager
         public const string RepoOwner = "ActualMasterOogway";
         public const string RepoName = "Roblox-Studio-Mod-Manager";
 
-        public const string ReleaseTag = "v2025.02.1";
+        public const string ReleaseTag = "v2025.02.01";
         public static readonly string BaseConfigUrl = $"https://raw.githubusercontent.com/{RepoOwner}/{RepoName}/{RepoBranch}/Config/";
 
         public static readonly RegistryKey LegacyRegistry = Registry.CurrentUser.GetSubKey("SOFTWARE", "Roblox Studio Mod Manager");
