@@ -753,7 +753,7 @@ namespace RobloxStudioModManager
             return !cancelled;
         }
 
-        public async Task<bool> Bootstrap(string targetVersion = "")
+        public async Task<bool> Bootstrap(string targetVersion = "", bool ROBLOX_INTERNAL = false)
         {
             setStatus("Checking for updates");
             echo("Checking build installation...");
@@ -1059,10 +1059,10 @@ namespace RobloxStudioModManager
                 // Secret feature only for me :(
                 // Feel free to patch in your own thing if you want.
 
-#               if ROBLOX_INTERNAL
-                    var rbxInternal = Task.Run(() => RobloxInternal.Patch(this));
+               if (ROBLOX_INTERNAL) { 
+                    var rbxInternal = Task.Run(() => Utility.RobloxInternal.Patch(this));
                     await rbxInternal.ConfigureAwait(false);
-#               endif
+               }
             }
 
             ProgressBarStyle = ProgressBarStyle.Marquee;
@@ -1074,6 +1074,11 @@ namespace RobloxStudioModManager
 
             await Task.Delay(1000);
             return true;
+        }
+
+        public void Echo(string message)
+        {
+            EchoFeed?.Invoke(message);
         }
     }
 }

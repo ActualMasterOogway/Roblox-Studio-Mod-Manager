@@ -30,7 +30,7 @@ namespace RobloxStudioModManager
             BringToFront();
         }
 
-        public async Task Bootstrap()
+        public async Task Bootstrap(bool patch_internal = false)
         {
             var state = Program.State;
             var targetVersion = state.TargetVersion;
@@ -62,7 +62,7 @@ namespace RobloxStudioModManager
                 Refresh();
             });
 
-            var bootstrap = Bootstrapper.Bootstrap(targetVersion);
+            var bootstrap = Bootstrapper.Bootstrap(targetVersion, patch_internal);
             await bootstrap.ConfigureAwait(true);
         }
 

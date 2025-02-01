@@ -378,7 +378,7 @@ namespace RobloxStudioModManager
 
             using (var installer = new BootstrapperForm(bootstrapper))
             {
-                var install = installer.Bootstrap();
+                var install = installer.Bootstrap(patchRobloxInternal.Checked);
                 await install.ConfigureAwait(true);
             }
             

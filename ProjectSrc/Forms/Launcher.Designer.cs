@@ -1,4 +1,6 @@
-﻿namespace RobloxStudioModManager
+﻿using System.Windows.Forms;
+
+namespace RobloxStudioModManager
 {
     partial class Launcher
     {
@@ -33,6 +35,7 @@
             this.forceRebuild = new System.Windows.Forms.CheckBox();
             this.openFlagEditor = new System.Windows.Forms.Button();
             this.openStudioDirectory = new System.Windows.Forms.CheckBox();
+            this.patchRobloxInternal = new System.Windows.Forms.CheckBox();
             this.targetVersionLabel = new System.Windows.Forms.Label();
             this.title = new System.Windows.Forms.Label();
             this.targetVersion = new System.Windows.Forms.ComboBox();
@@ -77,7 +80,7 @@
             this.forceRebuild.AccessibleName = "Force Client Rebuild";
             this.forceRebuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.forceRebuild.AutoSize = true;
-            this.forceRebuild.Location = new System.Drawing.Point(174, 174);
+            this.forceRebuild.Location = new System.Drawing.Point(175, 157);
             this.forceRebuild.Margin = new System.Windows.Forms.Padding(2);
             this.forceRebuild.Name = "forceRebuild";
             this.forceRebuild.Size = new System.Drawing.Size(119, 17);
@@ -104,13 +107,27 @@
             this.openStudioDirectory.AccessibleName = "Just Open Studio Path";
             this.openStudioDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.openStudioDirectory.AutoSize = true;
-            this.openStudioDirectory.Location = new System.Drawing.Point(174, 194);
+            this.openStudioDirectory.Location = new System.Drawing.Point(175, 177);
             this.openStudioDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.openStudioDirectory.Name = "openStudioDirectory";
             this.openStudioDirectory.Size = new System.Drawing.Size(152, 17);
             this.openStudioDirectory.TabIndex = 14;
             this.openStudioDirectory.Text = "Just Open Studio Directory";
             this.openStudioDirectory.UseVisualStyleBackColor = true;
+            // 
+            // patchRobloxInternal
+            // 
+            this.patchRobloxInternal.AccessibleName = "Patch Roblox Internal";
+            this.patchRobloxInternal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.patchRobloxInternal.AutoSize = true;
+            this.patchRobloxInternal.Location = new System.Drawing.Point(175, 198);
+            this.patchRobloxInternal.Margin = new System.Windows.Forms.Padding(2);
+            this.patchRobloxInternal.Name = "patchRobloxInternal";
+            this.patchRobloxInternal.Size = new System.Drawing.Size(128, 17);
+            this.patchRobloxInternal.TabIndex = 24;
+            this.patchRobloxInternal.Text = "Patch Roblox Internal";
+            this.patchRobloxInternal.UseVisualStyleBackColor = true;
+            this.patchRobloxInternal.Checked = true;
             // 
             // targetVersionLabel
             // 
@@ -120,7 +137,7 @@
             this.targetVersionLabel.CausesValidation = false;
             this.targetVersionLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.targetVersionLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.targetVersionLabel.Location = new System.Drawing.Point(171, 132);
+            this.targetVersionLabel.Location = new System.Drawing.Point(172, 115);
             this.targetVersionLabel.Name = "targetVersionLabel";
             this.targetVersionLabel.Size = new System.Drawing.Size(83, 15);
             this.targetVersionLabel.TabIndex = 17;
@@ -144,7 +161,7 @@
             this.targetVersion.FormattingEnabled = true;
             this.targetVersion.Items.AddRange(new object[] {
             "(Use Latest)"});
-            this.targetVersion.Location = new System.Drawing.Point(174, 149);
+            this.targetVersion.Location = new System.Drawing.Point(175, 132);
             this.targetVersion.Name = "targetVersion";
             this.targetVersion.Size = new System.Drawing.Size(152, 21);
             this.targetVersion.TabIndex = 18;
@@ -178,6 +195,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(335, 232);
+            this.Controls.Add(this.patchRobloxInternal);
             this.Controls.Add(this.releaseTag);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.title);
@@ -185,6 +203,7 @@
             this.Controls.Add(this.targetVersionLabel);
             this.Controls.Add(this.openFlagEditor);
             this.Controls.Add(this.openStudioDirectory);
+            this.Controls.Add(this.patchRobloxInternal);
             this.Controls.Add(this.forceRebuild);
             this.Controls.Add(this.manageMods);
             this.Controls.Add(this.launchStudio);
@@ -209,6 +228,7 @@
         private System.Windows.Forms.CheckBox forceRebuild;
         private System.Windows.Forms.Button openFlagEditor;
         private System.Windows.Forms.CheckBox openStudioDirectory;
+        private System.Windows.Forms.CheckBox patchRobloxInternal;
         private System.Windows.Forms.Label targetVersionLabel;
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.ComboBox targetVersion;
