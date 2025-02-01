@@ -9,7 +9,7 @@
 
 # What is this?
 
-The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for Roblox Studio. It is intended for power users who want to make experimental changes/tweaks to Roblox Studio without those changes being overwritten, and experiment with new features of Roblox Studio before the general public.
+The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for Roblox Studio originally created by [MaximumADHD](https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager). It is intended for power users who want to make experimental changes/tweaks to Roblox Studio without those changes being overwritten, and experiment with new features of Roblox Studio before the general public.
 
 # Features
 * File overrides are sustained between updates.
