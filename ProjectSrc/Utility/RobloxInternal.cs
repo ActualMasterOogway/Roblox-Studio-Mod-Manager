@@ -1,140 +1,133 @@
-﻿using RobloxStudioModManager;
+﻿using PeNet;
+using PeNet.Header.Pe;
+using RobloxStudioModManager;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using IcedIntel = Iced.Intel;
 
 namespace Utility
 {
     public static class RobloxInternal
     {
-        /// <summary>
-        /// Applies an internal patch to the Studio binary.
-        /// This method extracts the patch data from GitHub, extracts the signature and patch byte arrays,
-        /// finds the signature in the Studio binary, replaces it with the patch bytes, and writes the patched binary.
-        /// </summary>
-        /// <param name="bootstrapper">
-        /// An instance of StudioBootstrapper (or any object that can provide logging and file paths).
-        /// In this example we assume the bootstrapper exposes a GetLocalStudioPath() method and EchoFeed event.
-        /// </param>
         public static async Task Patch(StudioBootstrapper bootstrapper)
         {
-            string studioPath = bootstrapper.GetLocalStudioPath();
-
+            var path = bootstrapper.GetLocalStudioPath();
             bootstrapper.Echo("Applying internal patch...");
+            var image = await Task.Run(() => File.ReadAllBytes(path)).ConfigureAwait(false);
 
-            // URL for the Rust source code containing our patch definitions.
-            string url = "https://raw.githubusercontent.com/7ap/internal-studio-patcher/main/src/main.rs";
-            byte[] signature, patch;
+            var pe = new PeFile(image);
+            ulong imageBase = pe.ImageNtHeaders.OptionalHeader.ImageBase;
+            ImageSectionHeader[] sections = pe.ImageSectionHeaders;
 
-            try
+            byte[] key = Encoding.ASCII.GetBytes("VoiceChatEnableApiSecurityCheck");
+            ulong strAddr = FindStringAddress(image, sections, key, imageBase);
+            if (strAddr == 0)
             {
-                // Download the source and extract the signature and patch arrays.
-                signature = await GetByteArrayFromWebsiteAsync(url, "SIGNATURE").ConfigureAwait(false);
-                patch = await GetByteArrayFromWebsiteAsync(url, "PATCH").ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                bootstrapper.Echo("Error downloading patch data: " + ex.Message);
+                bootstrapper.Echo("Error: target string not found.");
                 return;
             }
 
-            byte[] binary;
-            try
+            var textSec = sections.FirstOrDefault(s => s.Name.TrimEnd('\0') == ".text");
+            if (textSec == null)
             {
-                binary = await Task.Run(() => File.ReadAllBytes(studioPath)).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                bootstrapper.Echo("Error reading studio binary: " + ex.Message);
+                bootstrapper.Echo("Error: .text section missing.");
                 return;
             }
 
-            int offset = FindSequence(binary, signature);
-            if (offset < 0)
+            int rawStart = (int)textSec.PointerToRawData;
+            int rawSize = (int)textSec.SizeOfRawData;
+            ulong textBase = imageBase + (ulong)textSec.VirtualAddress;
+            var code = new byte[rawSize];
+            Array.Copy(image, rawStart, code, 0, rawSize);
+
+            var codeReader = new IcedIntel.ByteArrayCodeReader(code);
+            var decoder = IcedIntel.Decoder.Create(64, codeReader);
+            decoder.IP = textBase;
+
+            var instructions = new InstructionList();
+            while (codeReader.CanReadByte)
             {
-                if (FindSequence(binary, patch) < 0) {
-                    bootstrapper.Echo("Signature not found in binary.");
-                } else {
-                    bootstrapper.Echo("Binary is already patched.");
-                }
+                decoder.Decode(out var insn);
+                instructions.Add(insn);
+            }
+
+            ulong? patchRip = GetPatchAddress(instructions, strAddr);
+            if (!patchRip.HasValue)
+            {
+                bootstrapper.Echo("Error: patch location not found.");
                 return;
             }
 
-            // Apply the patch: copy the patch bytes into the binary at the located offset.
-            Array.Copy(patch, 0, binary, offset, patch.Length);
+            var targetInsn = instructions.First(i => i.IP == patchRip.Value);
+            int offset = rawStart + (int)(patchRip.Value - textBase);
+            for (int i = 0; i < targetInsn.Length; i++)
+                image[offset + i] = 0x90;
 
-            try
-            {
-                await Task.Run(() => File.WriteAllBytes(studioPath, binary)).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                bootstrapper.Echo("Error writing patched binary: " + ex.Message);
-                return;
-            }
-
+            await Task.Run(() => File.WriteAllBytes(path, image)).ConfigureAwait(false);
             bootstrapper.Echo("Internal patch applied successfully.");
         }
 
-        /// <summary>
-        /// Downloads the given URL as a string, uses a regular expression to extract a Rust constant's byte array,
-        /// and returns the corresponding byte array.
-        /// </summary>
-        /// <param name="url">URL to download (should point to raw text)</param>
-        /// <param name="constantName">Name of the constant to find (e.g., "SIGNATURE" or "PATCH")</param>
-        /// <returns>Byte array extracted from the constant definition</returns>
-        private static async Task<byte[]> GetByteArrayFromWebsiteAsync(string url, string constantName)
+        static ulong FindStringAddress(byte[] image, ImageSectionHeader[] secs, byte[] needle, ulong baseAddr)
         {
-            using (var HttpClient = new WebClient())
+            foreach (var s in secs)
             {
-                string content = await HttpClient.DownloadStringTaskAsync(url);
-
-                // Regex to match the constant definition in the Rust source.
-                // Matches:
-                //   const CONSTANT_NAME: &[u8] = &[ ... ];
-                string pattern = $@"const\s+{constantName}:\s*&\[u8\]\s*=\s*&\[\s*(.*?)\s*\];";
-                var regex = new Regex(pattern, RegexOptions.Singleline);
-                var match = regex.Match(content);
-                if (!match.Success)
-                    throw new Exception($"Could not find constant {constantName} in the website content.");
-
-                // Extract the array contents and parse hex values.
-                string arrayContent = match.Groups[1].Value;
-                var hexRegex = new Regex(@"0x[0-9A-Fa-f]+");
-                var matches = hexRegex.Matches(arrayContent);
-                var bytes = new List<byte>();
-                foreach (Match m in matches)
-                {
-                    bytes.Add(Convert.ToByte(m.Value, 16));
-                }
-                return bytes.ToArray();
+                string name = s.Name.TrimEnd('\0');
+                if (name != ".rdata" && name != ".data") continue;
+                int start = (int)s.PointerToRawData;
+                int size = (int)s.SizeOfRawData;
+                int idx = image.AsSpan(start, size).IndexOf(needle);
+                if (idx >= 0)
+                    return baseAddr + (ulong)s.VirtualAddress + (ulong)idx;
             }
+            return 0;
         }
 
-        /// <summary>
-        /// Searches for the occurrence of the byte sequence (needle) inside a larger byte array (haystack).
-        /// Returns the zero-based index if found, or -1 if not found.
-        /// </summary>
-        private static int FindSequence(byte[] haystack, byte[] needle)
+        static ulong? GetPatchAddress(InstructionList insns, ulong strAddr)
         {
-            for (int i = 0; i <= haystack.Length - needle.Length; i++)
+            ulong? idFunc = null;
+            for (int i = 0; i < insns.Count; i++)
             {
-                bool found = true;
-                for (int j = 0; j < needle.Length; j++)
+                var ins = insns[i];
+                for (int op = 0; op < ins.OpCount; op++)
                 {
-                    if (haystack[i + j] != needle[j])
+                    if (ins.GetOpKind(op) != IcedIntel.OpKind.Memory) continue;
+                    if (ins.MemoryBase == IcedIntel.Register.RIP &&
+                        (ulong)ins.MemoryDisplacement64 == strAddr &&
+                        ins.Mnemonic != IcedIntel.Mnemonic.Lea)
                     {
-                        found = false;
+                        for (int j = i - 1; j >= 0; j--)
+                        {
+                            var prev = insns[j];
+                            if (prev.Mnemonic == IcedIntel.Mnemonic.Call &&
+                                !(j > 0 && insns[j - 1].Mnemonic == IcedIntel.Mnemonic.Lea))
+                            {
+                                idFunc = prev.NearBranchTarget;
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
-                if (found)
-                    return i;
+                if (idFunc.HasValue) break;
             }
-            return -1;
+            if (!idFunc.HasValue) return null;
+
+            for (int i = 1; i < insns.Count; i++)
+            {
+                var ins = insns[i];
+                if (ins.Mnemonic == IcedIntel.Mnemonic.Call &&
+                    ins.NearBranchTarget == idFunc.Value &&
+                    insns[i - 1].Mnemonic == IcedIntel.Mnemonic.Je)
+                {
+                    return insns[i - 1].IP;
+                }
+            }
+            return null;
         }
+
+        class InstructionList : System.Collections.Generic.List<IcedIntel.Instruction> { }
     }
 }
