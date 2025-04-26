@@ -9,46 +9,40 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{599F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobloxDeployHistory", "..\..\Roblox-Deploy-History\RobloxDeployHistory.csproj", "{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RbxFFlagDumper.Lib", "..\..\RbxFFlagDumper\RbxFFlagDumper.Lib\RbxFFlagDumper.Lib.csproj", "{CED30A7E-FD63-57F6-5B32-37B09E19CC49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
 		Internal|Any CPU = Internal|Any CPU
-		Internal|x64 = Internal|x64
 		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Debug|x64.ActiveCfg = Debug|x64
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Debug|x64.Build.0 = Debug|x64
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Internal|Any CPU.ActiveCfg = Internal|Any CPU
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Internal|Any CPU.Build.0 = Internal|Any CPU
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Internal|x64.ActiveCfg = Internal|x64
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Internal|x64.Build.0 = Internal|x64
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Release|x64.ActiveCfg = Release|x64
-		{FAD2621F-B280-4D6D-A260-F410C5B06E0C}.Release|x64.Build.0 = Release|x64
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Debug|x64.ActiveCfg = Debug|x64
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Debug|x64.Build.0 = Debug|x64
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Internal|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Internal|Any CPU.Build.0 = Debug|Any CPU
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Internal|x64.ActiveCfg = Release|x64
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Internal|x64.Build.0 = Release|x64
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Release|x64.ActiveCfg = Release|x64
-		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F}.Release|x64.Build.0 = Release|x64
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Internal|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Internal|Any CPU.Build.0 = Debug|Any CPU
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1CE1A9DF-C2FF-49C4-9B7C-792C962C339F} = {599F227F-86C3-4CB6-B12D-6CBF086B240E}
+		{CED30A7E-FD63-57F6-5B32-37B09E19CC49} = {599F227F-86C3-4CB6-B12D-6CBF086B240E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C54D42A8-8071-46D8-8581-22530C90CE09}

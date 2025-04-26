@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -7,6 +8,7 @@ namespace RobloxStudioModManager
 {
     public partial class FlagCreator : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public CustomFlag Result { get; private set; }
         private static readonly string[] classes = new string[3] { "F", "DF", "SF" };
 

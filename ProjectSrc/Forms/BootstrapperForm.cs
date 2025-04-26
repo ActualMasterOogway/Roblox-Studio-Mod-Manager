@@ -1,16 +1,17 @@
-﻿using System;
+﻿using RobloxDeployHistory;
+using System;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using RobloxDeployHistory;
-
 namespace RobloxStudioModManager
 {
     public partial class BootstrapperForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public StudioBootstrapper Bootstrapper { get; private set; }
         private ConcurrentBag<string> logQueue = new ConcurrentBag<string>();
         private readonly bool exitOnClose = false;
