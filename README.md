@@ -1,7 +1,7 @@
 <hr/>
 
 <p align="center">
-  <img width="256" height="256" src="https://raw.githubusercontent.com/MaximumADHD/Roblox-Studio-Mod-Manager/master/ProjectSrc/Resources/Logo.png"><h1 align=center>Roblox Studio Mod Manager<br/>(By: MaximumADHD)</h1>
+  <img width="256" height="256" src="https://raw.githubusercontent.com/ActualMasterOogway/Roblox-Studio-Mod-Manager/master/ProjectSrc/Resources/Logo.png"><h1 align=center>Roblox Studio Mod Manager<br/>(By: ActualMasterOogway)</h1>
   
 </p>
 
@@ -9,7 +9,7 @@
 
 # What is this?
 
-The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for Roblox Studio. It is intended for power users who want to make experimental changes/tweaks to Roblox Studio without those changes being overwritten, and experiment with new features of Roblox Studio before the general public.
+The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for Roblox Studio originally created by [MaximumADHD](https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager). It is intended for power users who want to make experimental changes/tweaks to Roblox Studio without those changes being overwritten, and experiment with new features of Roblox Studio before the general public.
 
 # Features
 * File overrides are sustained between updates.
@@ -18,6 +18,7 @@ The **Roblox Studio Mod Manager** is an open-source alternative bootstrapper for
 * Support for launching from the website, and from saved _RBXL_ files.
 * File updates from Roblox's deployment servers are only applied where needed.
 * Runs and installs in a separate directory, 100% independent of Roblox Studio's bootstrapper.
+* Enables all the Internal-only features (This includes a better Fast Flag editor).
 
 # ANTI-VIRUS DISCLAIMER
 
@@ -33,8 +34,8 @@ https://twitter.com/BoatbomberRBLX/status/1347262909915738113
 # Downloads
 
 The latest version can be found on the ***Releases*** page of this repository:<br/>
-https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager/releases
+https://github.com/ActualMasterOogway/Roblox-Studio-Mod-Manager/releases
 
 You can also download the latest committed versions here:
-* <a href="https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager/raw/main/RobloxStudioModManager.exe">Download (.exe)</a></h1>
-* <a href="https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager/archive/main.zip">Download (.zip)</a>
+* <a href="https://github.com/ActualMasterOogway/Roblox-Studio-Mod-Manager/raw/main/RobloxStudioModManager.exe">Download (.exe)</a></h1>
+* <a href="https://github.com/ActualMasterOogway/Roblox-Studio-Mod-Manager/archive/main.zip">Download (.zip)</a>
