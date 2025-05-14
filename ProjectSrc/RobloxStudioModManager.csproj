@@ -30,13 +30,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
     <DocumentationFile>
     </DocumentationFile>
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
+    <PublishPdb>false</PublishPdb>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
@@ -62,7 +63,7 @@
     <DefineConstants>TRACE;ROBLOX_INTERNAL</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <PublishSingleFile>true</PublishSingleFile>
@@ -130,6 +131,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedFileToPublish Update="@(ResolvedFileToPublish)" Condition="$([System.String]::new('%(ResolvedFileToPublish.Extension)').Equals('.pdb'))">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </ResolvedFileToPublish>
+    <ResolvedFileToPublish Update="@(ResolvedFileToPublish)" Condition="$([System.String]::new('%(ResolvedFileToPublish.FileName)%(ResolvedFileToPublish.Extension)').Equals('RobloxStudioModManager.dll.config'))">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </ResolvedFileToPublish>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Costura.Fody">
