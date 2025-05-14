@@ -55,7 +55,7 @@ namespace RobloxStudioModManager
 
             if (result == DialogResult.Yes)
             {
-                Process.Start($"https://www.github.com/{Program.RepoOwner}/{Program.RepoName}/releases/tag/{releaseTag}");
+                Process.Start("explorer", $"https://www.github.com/{Program.RepoOwner}/{Program.RepoName}/releases/tag/{releaseTag}");
                 Application.Exit();
             }
 
@@ -487,7 +487,7 @@ namespace RobloxStudioModManager
 
             if (openStudioDirectory.Checked)
             {
-                Process.Start(studioRoot);
+                Process.Start("explorer.exe", studioRoot);
             }
             else
             {
